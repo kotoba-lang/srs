@@ -143,6 +143,32 @@ own TLD set, not by counting labels. A registry for `co.jp` serves
 `example.co.jp`; counting to two would have refused every ccTLD second-level
 registry.
 
+## Hosts: in-zone versus out-of-zone
+
+`srs.host` exists because two questions cannot be answered by strings:
+
+**Is this nameserver still in use?** A host any domain delegates to cannot be
+deleted (RFC 5732 §3.2.2). `delete` refuses with **2305** — *object association
+prohibits operation*, the code's actual meaning — and names the domains, so a
+registrar knows to look for associations rather than for a lock. Associations
+are a **set**, not a count: a counter that saw the same domain linked twice
+would eventually let a host in use be deleted, or leave an unused one
+permanently undeletable.
+
+**Does it need glue?** `ns1.example.com` serving `example.com` is **in-zone**
+and MUST carry addresses — resolving it otherwise requires already knowing it,
+which is the whole reason glue exists. `ns1.example.net` is **out-of-zone** and
+MUST NOT. RFC 5732 §1.1 states both directions and implementations routinely
+skip the second: storing an address for a name the registry is not
+authoritative for looks helpful and quietly makes the registry an unreliable
+second copy of someone else's data. Both directions are enforced, and
+`update-addresses` re-checks rather than assuming.
+
+`linked` is a **derived** status, never stored — a stored copy can disagree
+with the associations it is supposed to summarize. And `info` reports the
+*count*, not the list: which domains use a nameserver is not something a public
+response should enumerate.
+
 ## Policy
 
 `srs.lifecycle/default-policy` holds gTLD-standard windows — 5-day AGP, 45-day
@@ -156,10 +182,13 @@ so that no bare number in this library has a provenance you have to guess at.
 
 - **In:** domain objects, their lifecycle, statuses, grace periods, transfers,
   the registry-wide sweep, and the projections EPP/RDAP/DNS need.
-- **Not yet:** host and contact objects (RFC 5732 / RFC 5733) as first-class
-  registry objects — nameservers are currently plain strings on the domain, and
-  a registry that offers host objects needs them modeled with their own
-  lifecycle. Documented rather than silently missing.
+- **Also in:** host objects (RFC 5732) — `srs.host`. Nameservers as objects
+  with their own associations and lifecycle, which is what lets the registry
+  answer the two questions plain strings cannot: is this nameserver still in
+  use, and does it need glue.
+- **Not yet:** contact objects (RFC 5733). Registrant/admin/tech contacts are
+  currently opaque handles on the domain. Documented rather than silently
+  missing.
 - **Never:** storage, a clock, a network, or a price. Prices live in
   `domain-billing`, which reads the events this library returns.
 
@@ -169,4 +198,4 @@ so that no bare number in this library has a provenance you have to guess at.
 clojure -M:test
 ```
 
-38 tests / 137 assertions.
+48 tests / 172 assertions.
