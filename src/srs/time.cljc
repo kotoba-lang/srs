@@ -22,7 +22,7 @@
   `dateTime` values and every registry publishes in Z), and introducing a local
   zone would make the same domain expire on different days for different
   operators."
-  (:require [clojure.string :as str])
+  (:require [kotoba.lang.text :as str])
   (:refer-clojure :exclude [second]))
 
 (def ^:const ms-per-second 1000)
