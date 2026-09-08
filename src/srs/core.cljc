@@ -25,7 +25,7 @@
   every one of them would be untestable without the others. Returning them as
   data keeps the direction of dependency pointing one way — `domain-billing`
   and the zone publisher read `srs` events; `srs` reads nothing."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [srs.lifecycle :as lc]
             [srs.status :as status]))
 
@@ -37,7 +37,7 @@
   name outside its own namespace has allocated something it cannot serve."
   ([tld] (empty-registry [tld] {}))
   ([tlds policy]
-   {:registry/tlds (into #{} (map #(str/lower-case (str/replace % #"^\.|\.$" ""))) tlds)
+   {:registry/tlds (into #{} (map #(str/lower (str/replace % #"^\.|\.$" ""))) tlds)
     :registry/policy (merge lc/default-policy policy)
     :registry/domains {}}))
 
@@ -48,7 +48,7 @@
   same class of defect that ADR-2607262100 recorded in `cloud-itonami` when
   FQDN and zone-relative forms were compared unnormalized."
   [name]
-  (some-> name str/trim (str/replace #"\.$" "") str/lower-case))
+  (some-> name str/trim (str/replace #"\.$" "") str/lower))
 
 (defn domain [registry dname]
   (get-in registry [:registry/domains (normalize-name dname)]))

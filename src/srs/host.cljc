@@ -27,11 +27,11 @@
 
   Everything here is pure: hosts go in a map, `now` is an argument, and no
   storage or clock is imported."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [srs.status :as status]))
 
 (defn normalize [nm]
-  (some-> nm str/trim (str/replace #"\.$" "") str/lower-case))
+  (some-> nm str/trim (str/replace #"\.$" "") str/lower))
 
 (defn in-zone?
   "Is `host` inside `zone`? `ns1.example.com` is in-zone for `example.com`;

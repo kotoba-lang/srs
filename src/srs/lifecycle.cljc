@@ -49,7 +49,7 @@
   refundable. Modeling them as phases — as the naive reading of the RFC's
   status list invites — makes them mutually exclusive, and they are not: a
   domain can sit in `renewPeriod` and `transferPeriod` at once."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [srs.status :as status]
             [srs.time :as t]))
 
