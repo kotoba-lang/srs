@@ -37,7 +37,7 @@ decade is an ordinary expression:
 ```
 
 The whole 30-day redemption sequence, the 60-day transfer lock, and the AGP
-refund boundary are each a one-line assertion. See `test/srs/lifecycle_test.cljc`.
+refund boundary are each a one-line assertion. See `test/srs/lifecycle_test.cljk`.
 
 ## The phases
 
