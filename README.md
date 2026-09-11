@@ -195,7 +195,7 @@ so that no bare number in this library has a provenance you have to guess at.
 ## Test
 
 ```
-clojure -M:test
+kbb -M:test
 ```
 
 48 tests / 172 assertions.
