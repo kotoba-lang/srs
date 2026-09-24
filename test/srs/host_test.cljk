@@ -1,5 +1,5 @@
 (ns srs.host-test
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [srs.host :as host]))
 
 (def t0 1767225600000)

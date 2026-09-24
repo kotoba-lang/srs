@@ -1,5 +1,5 @@
 (ns srs.lifecycle-test
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [srs.lifecycle :as lc]
             [srs.status :as status]
             [srs.time :as t]))
