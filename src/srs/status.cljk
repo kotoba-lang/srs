@@ -24,7 +24,7 @@
   `ok` is not a status like the others: RFC 5731 §2.3 defines it as the value
   an object carries when it has *no* other status. It is derived, never stored
   — see `normalize`."
-  (:require [clojure.set :as set]))
+  (:require [kotoba.lang.coll :as set]))
 
 ;; ── the vocabulary ────────────────────────────────────────────────────────
 
