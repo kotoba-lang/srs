@@ -1,5 +1,5 @@
 (ns srs.core-test
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [srs.core :as srs]
             [srs.time :as t]))
 
